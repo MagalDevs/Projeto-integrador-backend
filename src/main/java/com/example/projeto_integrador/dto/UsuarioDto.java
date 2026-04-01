@@ -1,8 +1,7 @@
 package com.example.projeto_integrador.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.projeto_integrador.domain.enums.Role;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +20,6 @@ public class UsuarioDto {
     private UUID id;
     private String nome;
     private String email;
-    private String phone;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
