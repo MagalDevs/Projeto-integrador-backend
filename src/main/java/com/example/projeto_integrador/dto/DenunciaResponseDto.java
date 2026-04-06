@@ -14,8 +14,8 @@ public record DenunciaResponseDto(
         float latitude,
         float longitude,
         Instant createdAt,
-        UUID usuarioId,
-        UUID categoriaId
+        UsuarioResponseDto usuario,
+        CategoriaResponseDto categoria
 ) {
     public DenunciaResponseDto(Denuncia denuncia) {
         this(
@@ -26,8 +26,8 @@ public record DenunciaResponseDto(
                 denuncia.getLatitude(),
                 denuncia.getLongitude(),
                 denuncia.getCreatedAt(),
-                denuncia.getUsuario().getId(),
-                denuncia.getCategoria().getId()
+                new UsuarioResponseDto(denuncia.getUsuario()),
+                new CategoriaResponseDto(denuncia.getCategoria())
         );
     }
 }

@@ -4,12 +4,10 @@ import com.example.projeto_integrador.dto.DenunciaRequestCreateDto;
 import com.example.projeto_integrador.dto.DenunciaResponseDto;
 import com.example.projeto_integrador.service.DenunciaService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/denuncias")
@@ -25,7 +23,17 @@ public class DenunciaController {
         return ResponseEntity.ok(service.getAllDenuncias().stream().map(denuncia -> new DenunciaResponseDto(denuncia)).toList());
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
+    public ResponseEntity<DenunciaResponseDto> getDenunciaById(@PathVariable String id) {
+        return ResponseEntity.ok(new DenunciaResponseDto(service.getDenunciaById(UUID.fromString(id))));
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<DenunciaResponseDto>> getDenunciasByUsuarioId(@PathVariable String usuarioId) {
+        return ResponseEntity.ok(service.getDenunciasByUsuarioId(UUID.fromString(usuarioId)).stream().map(denuncia -> new DenunciaResponseDto(denuncia)).toList());
+    }
+
+    @PostMapping
     public ResponseEntity<DenunciaResponseDto> createDenuncia(@RequestBody DenunciaRequestCreateDto dto) {
         return ResponseEntity.ok(new DenunciaResponseDto(service.createDenuncia(dto)));
     }

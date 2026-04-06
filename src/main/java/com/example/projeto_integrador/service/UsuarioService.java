@@ -33,11 +33,23 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
     }
 
+    public UsuarioDto getCompleteUserById(UUID id) {
+        return completoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+    }
+
     @Transactional
     public UsuarioDto createUser(UsuarioRequestDto request) {
         String userId = supabaseService.createAuthUser(request.email(), request.password());
         Usuario usuario = new Usuario(request, userId, Role.USER);
         repository.save(usuario);
         return new UsuarioDto(usuario.getId(), usuario.getNome(), request.email(), usuario.getRole());
+    }
+
+    @Transactional
+    public Usuario updateUser(UsuarioRequestDto request, UUID id) {
+        Usuario usuario = getUserById(id);
+        usuario.updateData(request);
+        return repository.save(usuario);
     }
 }

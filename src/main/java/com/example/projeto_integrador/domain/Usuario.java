@@ -25,4 +25,10 @@ public class Usuario {
         this.nome = request.nome();
         this.role = role;
     }
+
+    public void updateData(UsuarioRequestDto request) {
+        if (request.nome() != null && !request.nome().isBlank() && request.nome() != this.nome) {
+            this.nome = request.nome();
+        }
+    }
 }

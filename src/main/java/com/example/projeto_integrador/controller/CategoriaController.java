@@ -17,7 +17,7 @@ public class CategoriaController {
         this.service = service;
     }
 
-    @GetMapping("/admin")
+    @GetMapping
     public ResponseEntity<List<Categoria>> getAllCategories(){
         return ResponseEntity.ok(service.getAllCategories());
     }
@@ -25,5 +25,10 @@ public class CategoriaController {
     @PostMapping("/admin")
     public ResponseEntity<Categoria> createCategory(@RequestBody CategoriaRequestCreateDto categoria) {
         return ResponseEntity.ok(service.createCategory(categoria));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Categoria> updateCategory(@RequestBody CategoriaRequestCreateDto categoria, @PathVariable String id) {
+        return ResponseEntity.ok(service.updateCategoria(categoria, java.util.UUID.fromString(id)));
     }
 }

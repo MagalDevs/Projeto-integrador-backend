@@ -32,6 +32,11 @@ public class DenunciaService {
                 .orElseThrow(() -> new RuntimeException("Denúncia não encontrada!"));
     }
 
+    public List<Denuncia> getDenunciasByUsuarioId(UUID usuarioId){
+        Usuario usuario = usuarioService.getUserById(usuarioId);
+        return repository.findAllByUsuarioId(usuario.getId());
+    }
+
     @Transactional
     public Denuncia createDenuncia(DenunciaRequestCreateDto denuncia){
         Usuario usuario = usuarioService.getUserById(denuncia.usuarioId());
