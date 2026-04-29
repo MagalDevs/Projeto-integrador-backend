@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -40,6 +42,9 @@ public class Denuncia {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
+    @OneToMany(mappedBy = "denuncia", fetch = FetchType.LAZY)
+    private List<Imagem> imagens = new ArrayList<>();
 
     public Denuncia(DenunciaRequestCreateDto denuncia, Usuario usuario, Categoria categoria) {
         this.titulo = denuncia.titulo();

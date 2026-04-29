@@ -1,9 +1,11 @@
 package com.example.projeto_integrador.dto;
 
 import com.example.projeto_integrador.domain.Denuncia;
+import com.example.projeto_integrador.domain.Imagem;
 import com.example.projeto_integrador.domain.enums.StatusEnum;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 public record DenunciaResponseDto(
@@ -15,7 +17,8 @@ public record DenunciaResponseDto(
         float longitude,
         Instant createdAt,
         UsuarioResponseDto usuario,
-        CategoriaResponseDto categoria
+        CategoriaResponseDto categoria,
+        List<String> imagens
 ) {
     public DenunciaResponseDto(Denuncia denuncia) {
         this(
@@ -27,7 +30,8 @@ public record DenunciaResponseDto(
                 denuncia.getLongitude(),
                 denuncia.getCreatedAt(),
                 new UsuarioResponseDto(denuncia.getUsuario()),
-                new CategoriaResponseDto(denuncia.getCategoria())
+                new CategoriaResponseDto(denuncia.getCategoria()),
+                denuncia.getImagens().stream().map(Imagem::getUrl).toList()
         );
     }
 }
