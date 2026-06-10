@@ -4,6 +4,7 @@ import com.example.projeto_integrador.domain.Denuncia;
 import com.example.projeto_integrador.domain.enums.StatusEnum;
 import com.example.projeto_integrador.dto.DenunciaRequestCreateDto;
 import com.example.projeto_integrador.dto.DenunciaResponseDto;
+import com.example.projeto_integrador.dto.DevolutivaDto;
 import com.example.projeto_integrador.service.DenunciaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +27,7 @@ public class DenunciaController {
 
     @GetMapping("/admin")
     public ResponseEntity<List<DenunciaResponseDto>> getAllDenuncias() {
-        return ResponseEntity.ok(service.getAllDenuncias().stream().map(denuncia -> new DenunciaResponseDto(denuncia)).toList());
+        return ResponseEntity.ok(service.getAllDenuncias().stream().map(DenunciaResponseDto::new).toList());
     }
 
     @GetMapping("/{id}")
@@ -36,7 +37,7 @@ public class DenunciaController {
 
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<DenunciaResponseDto>> getDenunciasByUsuarioId(@PathVariable String usuarioId) {
-        return ResponseEntity.ok(service.getDenunciasByUsuarioId(UUID.fromString(usuarioId)).stream().map(denuncia -> new DenunciaResponseDto(denuncia)).toList());
+        return ResponseEntity.ok(service.getDenunciasByUsuarioId(UUID.fromString(usuarioId)).stream().map(DenunciaResponseDto::new).toList());
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -61,5 +62,10 @@ public class DenunciaController {
     @PatchMapping("{id}/update-status/{status}")
     public ResponseEntity<DenunciaResponseDto> updateStatus(@PathVariable String id, @PathVariable String status) {
         return ResponseEntity.ok(new DenunciaResponseDto(service.updateStatus(UUID.fromString(id), StatusEnum.valueOf(status))));
+    }
+
+    @PatchMapping("/admin/devolutiva/{id}")
+    public ResponseEntity<DenunciaResponseDto> devolutiva(@RequestBody DevolutivaDto dto, @PathVariable String id) {
+        return ResponseEntity.ok(new DenunciaResponseDto(service.updateDevolutiva(UUID.fromString(id), dto.devolutiva())));
     }
 }

@@ -30,6 +30,7 @@ public class Denuncia {
     private StatusEnum status;
     private float latitude;
     private float longitude;
+    private String devolutiva;
     @CreationTimestamp
     @Column(name = "created_at")
     private Instant createdAt;

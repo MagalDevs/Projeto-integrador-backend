@@ -60,4 +60,10 @@ public class DenunciaService {
         denuncia.setStatus(statusEnum);
         return repository.save(getDenunciaById(uuid));
     }
+
+    public Denuncia updateDevolutiva(UUID uuid, String devolutiva) {
+        Denuncia denuncia = getDenunciaById(uuid);
+        denuncia.setDevolutiva(devolutiva);
+        return repository.save(getDenunciaById(uuid));
+    }
 }
